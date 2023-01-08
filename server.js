@@ -1,8 +1,11 @@
 const express = require('express');
 const app = express()
-const Wordnet = require('./views/wordnet');
+const Wordnet = require('./lib/wordnet');
 const wordnet = new Wordnet();
 let wordbank=[]
+let test="1";
+const data={array:test}
+let checker=false;
     //loads in the static files in the view directory
 app.use(express.static("./"));  
 app.use(express.json());
@@ -10,12 +13,13 @@ app.set('views', './views');
 app.set('view engine', 'pug');
 
     app.get("/",async(req,res)=>{
-      res.render("wordSelector.pug");
+      res.render("wordSelector",{wordbank:wordbank,checker:checker});
+      console.log(wordbank)
     })
 
-    app.post("/",(req,res)=>{
+    app.post("/",async(req,res)=>{
       
-      console.log(req.body.word);
+      
       
       let current=req.body.word;
       
@@ -27,25 +31,39 @@ app.set('view engine', 'pug');
         if(result.lemma==current){
           
        
-         wordbank.push({ lemma:result.lemma, synonyms:result.synonyms,desc:result.gloss});
+         wordbank.push({id:result.synsetOffset, lemma:result.lemma, synonyms:result.synonyms,desc:result.gloss});
          
           }
       
       
         });
         
-      res.render("wordSelector.pug");
-      console.log(wordbank);
+          
+          
+      test=2;
+      checker=true;
+      res.render("wordSelector",{wordbank:wordbank,checker:checker});
       
       })
       
       .then(() => wordnet.close());
-      
-      
+       
       
       
     })
+    app.get("/:id",async(req,res)=>{
+      let currentWord={}
+     console.log(req.params.id)
+     Object.keys(wordbank).forEach(key => {
+      if(wordbank[key].id==req.params.id){
+        currentWord=wordbank[key]
 
+    }
+      
+
+    })
+    res.render("selectedWord",{currentWord:currentWord})
+  })
     app.listen(3000);
     console.log("Server Running at PORT 3000  CNTL-C to quit");
     console.log("To Test");
