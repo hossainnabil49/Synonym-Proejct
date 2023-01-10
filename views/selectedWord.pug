@@ -1,0 +1,13 @@
+doctype html
+html(lang="en")
+    head
+        title  WORD  
+    body
+        #title 
+            h1 #{currentWord.lemma} 
+            p #{currentWord.desc}
+        #container 
+            if currentWord.synonyms
+                each val in currentWord.synonyms 
+                    div.circle
+                        p #{val} 

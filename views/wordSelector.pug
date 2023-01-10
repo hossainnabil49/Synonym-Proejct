@@ -2,14 +2,36 @@ doctype html
 html(lang="en")
     head
         title  WORD  
+        meta(charset='UTF-8')
+        link(rel='stylesheet', href='/css/wordSelector.css')
     body
-    #title 
-        h1 Welcome to Synonym Selector 
+        #title
+            h1 Welcome to Synonym Selector 
 
-    #selector 
-        h4 Select a word 
+    
+            h4 Select a word 
         
-        input(type="text" id ="word")
+        .centered
+            .group
+                input(type="text" id="name" required)
+                label(for="name") Name
+                .bar
+        #select        
+            br
+            br
+            button#submit(type="button") Submit 
+    
+        if checker 
+            #newSelect
+                p Here are a list of words that match what you typed:
+                    each key in wordbank 
+                        br
+                        a(href="/"+key.id) #{h5=key.lemma} #{key.desc}
+                        
+                        
+            
 
-        button#submit(type="button") Submit 
     script(src="./main.js") 
+
+    
+            
