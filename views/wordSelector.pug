@@ -4,21 +4,23 @@ html(lang="en")
         title  WORD  
         meta(charset='UTF-8')
         link(rel='stylesheet', href='/css/wordSelector.css')
+        
     body
         #title
-            h1 Welcome to Synonym Selector 
-
-    
-            h4 Select a word 
+            h1 Synonym Search
+            
         
-        .centered
-            .group
-                input(type="text" id="name" required)
-                label(for="name") Name
-                .bar
-        #select        
+            
+        
+    
+        #select 
+            #text
+                h4 Select a word  
+            
+            input(type="text" id="word" )      
             br
             br
+           
             button#submit(type="button") Submit 
     
         if checker 
